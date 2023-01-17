@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://192.168.1.144:5432/liceum
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+
+data:
+  folder: /home/liceum/documents
