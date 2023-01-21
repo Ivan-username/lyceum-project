@@ -1,8 +1,8 @@
-package com.example.lyceumapi.controllers;
+package org.liceum.edm.controllers;
 
-import com.example.lyceumapi.dto.DocumentDto;
-import com.example.lyceumapi.entity.Document;
-import com.example.lyceumapi.service.DocumentService;
+import org.liceum.edm.dto.DocumentDto;
+import org.liceum.edm.entity.DocumentEntity;
+import org.liceum.edm.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,11 +31,11 @@ public class FileUploadController {
     }
 
     @PostMapping("save")
-    public Document save(@RequestBody DocumentDto document) {
-        return service.save(document);
+    public DocumentEntity save(@RequestBody DocumentDto documentDto) {
+        return service.save(documentDto);
     }
     @GetMapping("getAll")
-    public List<Document> getAll() {
+    public List<DocumentEntity> getAll() {
         return service.getAll();
     }
 
@@ -44,8 +44,14 @@ public class FileUploadController {
         return "Вы можете загружать файл с использованием того же URL.";
     }
 
+
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file) {
+    public @ResponseBody String handleFileUpload(@RequestParam("docType") String docType,
+                                                 @RequestParam("file") MultipartFile file) {
+
+
+        String userId = "1";
+        //String docType = "passport";
 
         final String pathToFile = "C:/user.ivan/lyceum_homework/Project/Files/"; //TODO                    ---------- HARDCODE ----------
         final String fileName = file.getOriginalFilename();
@@ -59,6 +65,15 @@ public class FileUploadController {
                 OutputStream stream = new BufferedOutputStream(new FileOutputStream(fullPathToFile));
                 stream.write(bytes);
                 stream.close();
+
+                service.save(DocumentDto
+                        .builder()
+                                .userId(userId)
+                                .docType(docType)
+                                .documentRef(fullPathToFile)
+                        .build()
+                );
+
                 return "Вы удачно загрузили " + fileName + " в " + pathToFile;
             } catch (Exception e) {
                 return "Вам не удалось загрузить " + fileName + " => " + e.getMessage();

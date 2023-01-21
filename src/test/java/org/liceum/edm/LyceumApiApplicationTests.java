@@ -1,4 +1,4 @@
-package com.example.lyceumapi;
+package org.liceum.edm;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

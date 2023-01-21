@@ -1,8 +1,8 @@
-package com.example.lyceumapi.controllers;
+package org.liceum.edm.controllers;
 
-import com.example.lyceumapi.dto.UserDto;
-import com.example.lyceumapi.entity.User;
-import com.example.lyceumapi.service.UserService;
+import org.liceum.edm.dto.UserDto;
+import org.liceum.edm.entity.UserEntity;
+import org.liceum.edm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,12 +24,12 @@ public class UserController {
     }
 
     @PostMapping("save")
-    public User save(@RequestBody UserDto user) {
+    public UserEntity save(@RequestBody UserDto user) {
         return service.save(user);
     }
 
     @GetMapping("getAll")
-    public List<User> getAll() {
+    public List<UserEntity> getAll() {
         return service.getAll();
     }
 }

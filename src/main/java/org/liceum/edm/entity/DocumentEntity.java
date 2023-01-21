@@ -1,13 +1,13 @@
-package com.example.lyceumapi.entity;
+package org.liceum.edm.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.io.File;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -15,12 +15,17 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @Table(name = "documents")
-public class Document {
+public class DocumentEntity {
 
     @Id
-    private String id;
+    private String documentId;
     private String docType;
-    private File document;
+    private String documentRef;
     private LocalDateTime createdAt;
+
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private UserEntity user;
 
 }

@@ -1,4 +1,4 @@
-package com.example.lyceumapi.entity;
+package org.liceum.edm.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,10 +17,10 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
     @Id
-    private String id;
+    private String userId;
     private String name;
     private LocalDate birthDay;
     private LocalDateTime createdAt;

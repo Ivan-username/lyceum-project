@@ -1,4 +1,4 @@
-package com.example.lyceumapi.dto;
+package org.liceum.edm.dto;
 
 
 import lombok.Data;
