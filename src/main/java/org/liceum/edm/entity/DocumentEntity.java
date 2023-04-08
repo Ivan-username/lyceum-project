@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 
+/**
+ * Документ
+ */
 @Entity
 @Data
 @Accessors(chain = true)
