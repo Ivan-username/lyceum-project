@@ -4,6 +4,7 @@ import org.liceum.edm.dto.DocumentDto;
 import org.liceum.edm.entity.DocumentEntity;
 import org.liceum.edm.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,13 +21,16 @@ import java.io.OutputStream;
 import java.util.List;
 
 @RestController
-@RequestMapping("/documents")
-public class FileUploadController {
+@RequestMapping("api/v1/documents")
+public class ClientController {
 
     private final DocumentService service;
 
+    @Value("${service.pathToFile:C:/user.ivan/lyceum_homework/Project/Files/}")
+    private String pathToFile;
+
     @Autowired
-    public FileUploadController(DocumentService service) {
+    public ClientController(DocumentService service) {
         this.service = service;
     }
 
@@ -34,29 +38,32 @@ public class FileUploadController {
     public DocumentEntity save(@RequestBody DocumentDto documentDto) {
         return service.save(documentDto);
     }
+
     @GetMapping("getAll")
     public List<DocumentEntity> getAll() {
         return service.getAll();
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.GET)
-    public @ResponseBody String provideUploadInfo() {
+    public @ResponseBody
+    String provideUploadInfo() {
         return "Вы можете загружать файл с использованием того же URL.";
     }
 
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("docType") String docType,
-                                                 @RequestParam("file") MultipartFile file) {
+    public @ResponseBody
+    String handleFileUpload(@RequestParam("docType") String docType,
+                            @RequestParam("userId") String userId,
+                            @RequestParam("file") MultipartFile file) {
 
 
-        String userId = "1";
+//        String userId = "1";
         //String docType = "passport";
 
-        final String pathToFile = "C:/user.ivan/lyceum_homework/Project/Files/"; //TODO                    ---------- HARDCODE ----------
+        //final String pathToFile = "C:/user.ivan/lyceum_homework/Project/Files/"; //TODO                    ---------- HARDCODE ----------
         final String fileName = file.getOriginalFilename();
         final String fullPathToFile = pathToFile + fileName;
-
 
 
         if (!file.isEmpty()) {
@@ -68,9 +75,9 @@ public class FileUploadController {
 
                 service.save(DocumentDto
                         .builder()
-                                .userId(userId)
-                                .docType(docType)
-                                .documentRef(fullPathToFile)
+                        .userId(userId)
+                        .docType(docType)
+                        .documentRef(fullPathToFile)
                         .build()
                 );
 

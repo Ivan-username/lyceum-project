@@ -6,11 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class MainController {
-
-    @GetMapping("api/v1/main")
+public class RegistrationController {
+    @GetMapping("api/v1/registration")
     public String home(Model model){
-        model.addAttribute("title", "Main page.");
-        return "main";
+        model.addAttribute("var", "tipa_rabotaet");
+        return "registration";
     }
 }
